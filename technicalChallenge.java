@@ -3,6 +3,7 @@ import java.util.Scanner;
 
 public class TechnicalChallenge {
     public static void main(String[] args)  {
+        //Scanner for input
         Scanner sc = new Scanner(System.in);
 
         System.out.println("Enter a username: ");
@@ -18,6 +19,7 @@ public class TechnicalChallenge {
 
         System.out.println("Hello " + username);
 
+        //Checks if word has numbers, if not prints anagram result
         if(containsNumbers(firstWord) || containsNumbers(secondWord))   {
             System.out.println("Words cannot contain numbers");
         }
