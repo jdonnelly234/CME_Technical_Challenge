@@ -25,7 +25,7 @@ public class AnagramTest {
 
     @Test
     public void testIsAnagramWithWhitespace() {
-        assertTrue(Anagram.isAnagram("listen", "silent"));
+        assertTrue(Anagram.isAnagram("listen  ", "silent"));
     }
 
     @Test
