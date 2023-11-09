@@ -1,6 +1,7 @@
 import java.util.*;
 import java.io.*;
 import java.util.logging.Logger;
+import java.util.regex.Pattern;
 
 
 //For input/caching things
@@ -31,37 +32,48 @@ public class TechnicalChallenge {
         cacheLoader(cache);
         logger.info("Cache loaded successfully.");
 
-        //Check if user's values are present in cache
+        //Combine inputted values for entry into cache
         String input = username + " " + firstWord + " " + secondWord;
-        boolean isInCache = cache.contains(input);  //Checks if user input is already in cache
 
-        //Checks before computation to minimise redundancies
-        if(!isInCache)  {
-            //Checks if word has numbers, if not prints anagram result
-            if(containsNumbers(firstWord) || containsNumbers(secondWord))   {
-                System.out.println("Words cannot contain numbers");
-                System.out.println();
-            }
-            else if(Anagram.isAnagram(firstWord, secondWord)) {
-                System.out.println(firstWord + " and " + secondWord + " are anagrams!");
-                System.out.println();
-                cache.add(input);   //Adds to cache if new input
-            }
-            else    {
-                System.out.println(firstWord + " and " + secondWord + " are not anagrams.");
-                System.out.println();
-                cache.add(input);   
-            }
-            logger.info("Anagrams checked for: " + firstWord + " and " + secondWord);
+        // Validate inputs to ensure no special characters
+        if (!isValidInput(username) || !isValidInput(firstWord) || !isValidInput(secondWord)) {
+            System.out.println("Input values cannot contain special characters.");
+        } 
+        else {
+            boolean isInCache = cache.contains(input);
 
-            // Appends input and result to an external file
-            writeToFile(input);
-            logger.info("Data written to external file for input: " + input);
+            //Checks before computation to minimise redundancies
+            if(!isInCache)  {
+                //Checks if word has numbers, if not prints anagram result
+                if(containsNumbers(firstWord) || containsNumbers(secondWord))   {
+                    System.out.println("Words cannot contain numbers");
+                    System.out.println();
+                }
+                else if(Anagram.isAnagram(firstWord, secondWord)) {
+                    System.out.println(firstWord + " and " + secondWord + " are anagrams!");
+                    System.out.println();
+                    cache.add(input);   //Adds to cache if new and valid input
+                }
+                else    {
+                    System.out.println(firstWord + " and " + secondWord + " are not anagrams.");
+                    System.out.println();
+                    cache.add(input);   
+                }
+                logger.info("Anagrams checked for: " + firstWord + " and " + secondWord);
 
+                // Appends input and result to an external file
+                writeToFile(input);
+                logger.info("Data written to external file for input: " + input);
+            }
         }
     }
 
-    //Checks if input string contains numbers
+    public static boolean isValidInput(String input) {
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]+$");    //Using reg expression to ensure no special characters
+        return pattern.matcher(input).matches();
+    }
+
+    //Checks if input contains numbers
     public static boolean containsNumbers(String str) {
         return str.matches(".*\\d.*");
     }
@@ -109,7 +121,7 @@ class Anagram {
             return false;
         }
 
-        //Convert to char for easy sorting
+        //Convert to char for sorting purposes
         char[] firstWordChars = firstWord.toCharArray();
         char[] secondWordChars = secondWord.toCharArray();
 
