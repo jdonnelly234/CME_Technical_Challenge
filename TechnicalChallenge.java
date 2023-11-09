@@ -2,14 +2,12 @@ import java.util.*;
 import java.io.*;
 import java.util.logging.Logger;
 
-
-
-
+//For input/caching things
 public class TechnicalChallenge {
 
     private static final Logger logger = Logger.getLogger(TechnicalChallenge.class.getName());
     public static void main(String[] args)  {
-        //Initialise cache 
+        //Initialise cache to store inputs
         List<String> cache = new ArrayList<>();
 
         //Scanner for input
@@ -34,7 +32,7 @@ public class TechnicalChallenge {
 
         //Check if user's values are present in cache
         String input = username + " " + firstWord + " " + secondWord;
-        boolean isInCache = cache.contains(input);
+        boolean isInCache = cache.contains(input);  //Checks if user input is already in cache
 
         //Checks before computation to minimise redundancies
         if(!isInCache)  {
@@ -62,6 +60,7 @@ public class TechnicalChallenge {
         }
     }
 
+    //Checks if input string contains numbers
     private static boolean containsNumbers(String str) {
         return str.matches(".*\\d.*");
     }
@@ -85,11 +84,12 @@ public class TechnicalChallenge {
              PrintWriter out = new PrintWriter(bw)) {
             out.println(inputKey);
         } catch (IOException e) {
-            e.printStackTrace();
+            logger.severe("Error writing to external file: " + e.getMessage());
         }
     }
 }
 
+//For all things anagram
 class Anagram {
 
     //Converts input to lowercase and removes spaces
