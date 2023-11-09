@@ -2,6 +2,7 @@ import java.util.*;
 import java.io.*;
 import java.util.logging.Logger;
 
+
 //For input/caching things
 public class TechnicalChallenge {
 
@@ -61,11 +62,11 @@ public class TechnicalChallenge {
     }
 
     //Checks if input string contains numbers
-    private static boolean containsNumbers(String str) {
+    public static boolean containsNumbers(String str) {
         return str.matches(".*\\d.*");
     }
 
-    private static void cacheLoader(List<String> cache) {
+    public static void cacheLoader(List<String> cache) {
         // Load cached data from the external file and populate 
         try (BufferedReader br = new BufferedReader(new FileReader("cache.txt"))) {
             String line;
@@ -77,7 +78,7 @@ public class TechnicalChallenge {
         }
     }
 
-    private static void writeToFile(String inputKey) {
+    public static void writeToFile(String inputKey) {
         // Appends input and result to an external file
         try (FileWriter fw = new FileWriter("cache.txt", true);
              BufferedWriter bw = new BufferedWriter(fw);
